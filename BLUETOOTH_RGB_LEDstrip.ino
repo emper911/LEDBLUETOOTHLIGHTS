@@ -22,31 +22,6 @@ void setup()
   analogWrite(BLUEPIN, b);
 }
 
-/*
-void party(){
-  if(partyMode == 'r'){
-    for(int r = 0; r < 256; r++){
-      analogWrite(REDPIN, r);
-      delay(FADESPEED);
-    }
-    partyMode = 'b';
-  }
-  else if(partyMode == 'b'){
-    for(int b = 255; b > 0; b--){
-      analogWrite(BLUEPIN, b);
-      delay(FADESPEED);
-    }
-    partyMode = 'g';
-  }
-  else{
-    for (int g = 0; g < 256; g++) { 
-      analogWrite(GREENPIN, g);
-      delay(FADESPEED);
-    }
-    partyMode = 'r'; 
-  }
-}
-*/
 void loop(){
   while(Serial.available()){//while there is data available on the serial monitor
     if(Serial.read() == "\n"){
@@ -65,14 +40,6 @@ void loop(){
         digitalWrite(POWERPIN, HIGH);
         Serial.println("OFF");
       }
-      else if(message.equals("party")){
-        if(partying == true){
-          partying = false;
-        }
-        else{
-          partying = true;
-        }
-      }
       else{
         r = message.substring(0,3).toInt();//reads individual rgb values from 0-255
         g = message.substring(3,6).toInt();
@@ -89,9 +56,5 @@ void loop(){
       passed = true;//signifies having entered the condition.
     }
   }
-  /*
-  if(partying == true){
-    party();
-  }*/
   delay(5);
 }
