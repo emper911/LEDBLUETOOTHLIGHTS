@@ -1,6 +1,6 @@
 
 $(document).ready(function(){
-  var redData = 0, greenData = 0, blueData = 0;
+  var redData = "000", greenData = "000", blueData = "000";
   var stat = "off", blueConnect;
   $("#connectButton").click(function(event){
     //TODO connect bluetooth with arduino. If connected update <p>tag
@@ -21,7 +21,7 @@ $(document).ready(function(){
         if(json.status == "Connected"){
           $("#connectButton").val("Connected");
         }
-        else{
+        else if(json.status == "Not Connected"){
           $("#connectButton").val("Not Connected");
         }
       },
@@ -45,7 +45,7 @@ $(document).ready(function(){
       type:"POST",
       url:"/index.html",
       contentType: "application/json",
-      data: JSON.stringify({status: "null", power: stat, R:redData, G:greenData, B:blueData}),
+      data: JSON.stringify({status: blueConnect, power:stat, R:redData, G:greenData, B:blueData}),
       dataType: "json",
       success: function(json){
         console.log(json);
@@ -65,11 +65,20 @@ $(document).ready(function(){
 
   $("#redSlider").on("input",function(event){
     redData = $("#redSlider").val();
+    redData = redData.toString();
+    if(redData.length == 1){
+      redData = "00"+redData;
+    }
+    else if(redData.length == 2){
+      redData = "0"+redData;
+    }
+    $("#redData").text("RED: " + redData);
+    $("#colorSquare").css("fill","rgb("+redData+","+greenData+","+blueData+")");
     $.ajax({
       type:"POST",
       url:"/index.html",
       contentType: "application/json",
-      data: JSON.stringify({status: "null", power: stat, R:redData, G:greenData, B:blueData}),
+      data: JSON.stringify({identifier:"red",status: blueConnect, power:"null", R:redData, G:greenData, B:blueData}),
       dataType: "json",
       success: function(){
         $("#redData").text("RED: " + redData);
@@ -83,13 +92,20 @@ $(document).ready(function(){
 
   $("#greenSlider").on("input",function(event){
     greenData = $("#greenSlider").val();
+    greenData = greenData.toString();
+    if(greenData.length == 1){
+      greenData = "00"+greenData;
+    }
+    else if(greenData.length == 2){
+      greenData = "0"+greenData;
+    }
     $("#greenData").text("GREEN: " + greenData);
     $("#colorSquare").css("fill","rgb("+redData+","+greenData+","+blueData+")");
     $.ajax({
       type:"POST",
       url:"/index.html",
       contentType: "application/json",
-      data: JSON.stringify({status: "null", power:stat, R:redData, G:greenData, B:blueData}),
+      data: JSON.stringify({status: blueConnect, power:"null", R:redData, G:greenData, B:blueData}),
       dataType: "json",
       success: function(){
         $("#greenData").text("GREEN: " + greenData);
@@ -103,13 +119,20 @@ $(document).ready(function(){
 
   $("#blueSlider").on("input",function(event){
     blueData = $("#blueSlider").val();
+    blueData = blueData.toString();
+    if(blueData.length == 1){
+      blueData = "00"+blueData;
+    }
+    else if(blueData.length == 2){
+      blueData = "0"+blueData;
+    }
     $("#blueData").text("BLUE: " + blueData);
     $("#colorSquare").css("fill","rgb("+redData+","+greenData+","+blueData+")");
     $.ajax({
       type:"POST",
       url:"/index.html",
       contentType: "application/json",
-      data: JSON.stringify({status: "null",power:stat, R: r, G: g, B: b}),
+      data: JSON.stringify({status: blueConnect, power:"null", R: redData, G: greenData, B: blueData}),
       dataType: "json",
       success: function(){
         $("#blueData").text("BLUE: " + blueData);

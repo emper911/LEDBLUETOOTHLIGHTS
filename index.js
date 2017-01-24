@@ -2,28 +2,10 @@
 var express = require('express'), bodyParser = require('body-parser');
 var app = express();
 app.use(express.static('public'))
-//bluetooth
-const bluetooth = require('node-bluetooth');
-const device = new bluetooth.DeviceINQ();
-device
-.on('finished',  console.log.bind(console, 'finished'))
-.on('found', function found(address, name){
-  if(name == "HC-05"){
-    console.log('Found: ' + address + ' with name ' + name);
-    device.findSerialPortChannel(address, function(channel){
-      console.log('Found RFCOMM channel for serial port on %s: ', name, channel);
-
-      // make bluetooth connect to remote device
-      bluetooth.connect(address, channel, function(err, connection){
-        if(err) return console.error(err);
-        connection.write(new Buffer('power', 'ascii'));
-      });
-
-    });
-  }
-
-}).inquire();
-
+var connected = false;
+var SerialPort = require('serialport');
+var port = new SerialPort('/dev/cu.HC-05-DevB',{baudRate: 9600, autoOpen: false});
+var power;
 //port to listen on
 app.listen(3000, function () {
   console.log('app listening on port 3000!')
@@ -32,36 +14,67 @@ app.listen(3000, function () {
 app.use(bodyParser.json()); //parses request into json
 //root html file
 //app.route('/')
-app.get('/',function (req, res){
-    var options = {
-      root: __dirname + '/public/',
-      dotfiles: 'deny',
-      headers: {
-          'x-timestamp': Date.now(),
-          'x-sent': true
-      }
-    }
-    res.sendFile('index.html', options, function(err){
-      if (err) {
-        console.log(err);
-        res.status(err.status).end();
-      }
-      else {
-        console.log('Sent!');
-      }
-    });
-  })
-app.post('/index.html',function(req, res){
-    if (req.body.status != null){
-      //TODO - connect to bluetooth
-    }
-    else if(req.body.power != null){
-      //TODO - turn on lights
-    }
-    else {
-      //update led lights
-    }
 
-    console.log(req.body);
-    res.send(req.body);
-  });
+app.post('/index.html',function(req, res){
+    //if connection has been established
+  if(!connected && (req.body.status == "Connected")){
+    //connects to bluetooth if not connected
+    port.open(function(err){
+      if(err){
+        return console.log("Error: ", err);
+      }
+      connected = true;
+      console.log("Port is open!");
+      res.json({status:"Connected"});
+    });
+  }
+  //closes connection if front end says not connected
+  else if(connected && req.body.status == "Not Connected"){
+
+    port.close(function(err){
+      if(err){
+        return console.log("Error: ", err);
+      }
+      console.log("Port is closed!");
+      connected = false;
+      res.json({status:"Not Connected"});
+    });
+  }
+  //if power in json is not null must be ON or OFF
+  else if(req.body.power != "null"){
+    if(req.body.power == "ON"){
+      power = "ON";
+    }
+    else{
+      power = "OFF";
+    }
+    port.write(new Buffer(power), function(err){
+      port.drain(function(err){
+        if(err){
+          return console.log("Error: ", err);
+        }
+      });
+      if(err){
+        return console.log("Error: ", err);
+      }
+      console.log(req.body);
+      console.log("Power: ", req.body.power);
+      res.json({power: req.body.power});
+    });
+  }
+  else{
+    //req.body.R+req.body.G+req.body.B
+
+    port.write("255255255", function(err){
+      port.drain(function(err){
+        if(err){
+          return console.log("Error: ", err);
+        }
+      });
+      if(err){
+        return console.log("Error: ", err);
+      }
+      console.log(req.body.R+req.body.G+req.body.B);
+    });
+  }
+});
