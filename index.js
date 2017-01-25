@@ -1,15 +1,15 @@
 //express server
 var express = require('express'), bodyParser = require('body-parser');
 var app = express();
-app.use(express.static('public'))
+app.use(express.static('public'));
 var connected = false;
 var SerialPort = require('serialport');
 var port = new SerialPort('/dev/cu.HC-05-DevB',{baudRate: 9600, autoOpen: false});
 var power;
 //port to listen on
-app.listen(3000, function () {
-  console.log('app listening on port 3000!')
-})
+app.listen(3000, function(){
+  console.log('app listening on port 3000!');
+});
 
 app.use(bodyParser.json()); //parses request into json
 //root html file
@@ -48,7 +48,7 @@ app.post('/index.html',function(req, res){
     else{
       power = "OFF";
     }
-    port.write(new Buffer(power), function(err){
+    port.write(new Buffer(power+"*"), function(err){
       port.drain(function(err){
         if(err){
           return console.log("Error: ", err);
@@ -65,7 +65,7 @@ app.post('/index.html',function(req, res){
   else{
     //req.body.R+req.body.G+req.body.B
 
-    port.write("255255255", function(err){
+    port.write(req.body.R+req.body.G+req.body.B+"1*", function(err){
       port.drain(function(err){
         if(err){
           return console.log("Error: ", err);
