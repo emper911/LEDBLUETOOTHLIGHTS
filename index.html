@@ -11,8 +11,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
-	<body>
-		<div class = "container">
+	<body class = "container">
 			<div class="row top";>
 				<div class="center-block">
 					<h1 id="top">LED Light Control</h1>
@@ -28,6 +27,12 @@
 				<div class = "col-md-6 col-md-offset-3">
 					<p id ="powerStatus" style="text-align: center;">Power:</p>
 					<input id = "powerButton" class="buttons" type ="button" value="OFF"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					<p id="regular" style="text-align: center;">Regular Lighting</p>
+					<input class="buttons" id="regLighting" type="button" value="Regular Lighting"/>
 				</div>
 			</div>
 			<div id = "Colors" class="row">
@@ -72,12 +77,11 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-4 col-sm-offset-4 col-centered">
+				<div class="col-md-4 col-md-offset-4 col-centered">
 					<svg width="350" height="250">
 	  				<rect id="colorSquare" width="350" height="250"/>
 					</svg>
 				</div>
 			</div>
-	</div>
 	</body>
 </html>
