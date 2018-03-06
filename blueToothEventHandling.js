@@ -2,14 +2,14 @@ $(document).ready(function(){
   var redData = "000", greenData = "000", blueData = "000";
   var stat = "off", blueConnect;
   $("#connectButton").click(function(event){
-    //TODO connect bluetooth with arduino. If connected update <p>tag
+    //Connects bluetooth with arduino if connected, and disconnects if already connected.
     if($("#connectButton").val() == "Not Connected"){
       blueConnect = "Connected";
     }
     else{
       blueConnect = "Not Connected";
     }
-    $.ajax({
+    $.ajax({ //Sends data back to express server with new status of the bluetooth connection. 
       type:"POST",
       url:"/index.html",
       contentType: "application/json",
@@ -18,7 +18,7 @@ $(document).ready(function(){
       success: function(json){
         console.log(json);
         if(json.status == "Connected"){
-          $("#connectButton").val("Connected");
+          $("#connectButton").val("Connected"); //updates value of webpage. 
         }
         else if(json.status == "Not Connected"){
           $("#connectButton").val("Not Connected");
@@ -32,7 +32,7 @@ $(document).ready(function(){
   });
 
   $("#powerButton").click(function(event){
-    //TODO send to arduino to turn on or off. default is off
+    //Sends status of the power to arduino to turn on or off.
     stat = $("#powerButton").val();
     if(stat == "OFF"){
       stat = "ON";
@@ -61,7 +61,7 @@ $(document).ready(function(){
       }
     });
   });
-
+  //Sets LED lights to a color that is more yellow than white. 
   $("#regLighting").on("click", function(){
     $.ajax({
       type: "POST",
@@ -70,7 +70,7 @@ $(document).ready(function(){
       data: JSON.stringify({status: blueConnect, power:"null",R:"255",G:"255",B:"120"}),
       dataType: "json",
       success: function(){
-        $("#regLighting").css("fill", "rgb(255,241,200)");
+        $("#regLighting").css("fill", "rgb(255,241,200)"); //updates css style sheet as well to reflect the changes. 
       }
     });
   });
