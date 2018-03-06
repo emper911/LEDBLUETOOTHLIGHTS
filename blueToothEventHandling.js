@@ -61,7 +61,7 @@ $(document).ready(function(){
       }
     });
   });
-  //Sets LED lights to a color that is more yellow than white. 
+  //Sets LED lights to a color that is more yellow than white, an ideal lighting color.  
   $("#regLighting").on("click", function(){
     $.ajax({
       type: "POST",
@@ -74,7 +74,7 @@ $(document).ready(function(){
       }
     });
   });
-
+  //Slider information from user is sent to the arduino to change red coloring information.
   $("#redSlider").on({
     input: function(event){
       redData = $("#redSlider").val();
@@ -97,7 +97,7 @@ $(document).ready(function(){
         data: JSON.stringify({identifier:"red",status: blueConnect, power:"null", R:redData, G:greenData, B:blueData}),
         dataType: "json",
         success: function(){
-          $("#redData").text("RED: " + redData);
+          $("#redData").text("RED: " + redData); //Information of the exact number from 0-255 updates webpage.
           $("#colorSquare").css("fill","rgb("+redData+","+greenData+","+blueData+")");
         },
         error: function(){
