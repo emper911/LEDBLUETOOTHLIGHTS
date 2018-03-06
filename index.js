@@ -3,7 +3,7 @@ var express = require('express'), bodyParser = require('body-parser');
 var app = express();
 app.use(express.static('public'));
 var connected = false;
-var SerialPort = require('serialport');
+var SerialPort = require('serialport'); //serial port library
 var port = new SerialPort('/dev/cu.HC-05-DevB',{baudRate: 9600, autoOpen: false});
 var power;
 //port to listen on
@@ -14,7 +14,7 @@ app.listen(3000, function(){
 app.use(bodyParser.json()); //parses request into json
 //root html file
 //app.route('/')
-
+//req = requested data from Ajax in a JSON file, res = Responding data in a JSON file sent back to Ajax
 app.post('/index.html',function(req, res){
     //if connection has been established
   if(!connected && (req.body.status == "Connected")){
@@ -28,7 +28,7 @@ app.post('/index.html',function(req, res){
       res.json({status:"Connected"});
     });
   }
-  //closes connection if front end says not connected
+  //closes connection if webpage says not connected
   else if(connected && req.body.status == "Not Connected"){
 
     port.close(function(err){
