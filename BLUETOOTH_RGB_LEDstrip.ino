@@ -3,7 +3,7 @@
 #define BLUEPIN 3
 #define POWERPIN 7
 #define FADESPEED 5
-int r = 127;
+int r = 127;//rgb values
 int g = 127;
 int b = 127;
 String message; //string that stores the incoming message
@@ -16,7 +16,7 @@ void setup()
   pinMode(GREENPIN, OUTPUT);
   pinMode(BLUEPIN, OUTPUT);
   pinMode(POWERPIN, OUTPUT);
-  digitalWrite(POWERPIN, HIGH);//sets relay to off
+  digitalWrite(POWERPIN, HIGH);//sets relay to off power
   analogWrite(REDPIN, r);
   analogWrite(GREENPIN, g);
   analogWrite(BLUEPIN, b);
