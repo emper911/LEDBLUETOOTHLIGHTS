@@ -2,14 +2,14 @@ $(document).ready(function(){
   var redData = "000", greenData = "000", blueData = "000";
   var stat = "off", blueConnect;
   $("#connectButton").click(function(event){
-    //Connects bluetooth with arduino if connected, and disconnects if already connected.
+    //TODO connect bluetooth with arduino. If connected update <p>tag
     if($("#connectButton").val() == "Not Connected"){
       blueConnect = "Connected";
     }
     else{
       blueConnect = "Not Connected";
     }
-    $.ajax({ //Sends data back to express server with new status of the bluetooth connection. 
+    $.ajax({
       type:"POST",
       url:"/index.html",
       contentType: "application/json",
@@ -18,7 +18,7 @@ $(document).ready(function(){
       success: function(json){
         console.log(json);
         if(json.status == "Connected"){
-          $("#connectButton").val("Connected"); //updates value of webpage. 
+          $("#connectButton").val("Connected");
         }
         else if(json.status == "Not Connected"){
           $("#connectButton").val("Not Connected");
@@ -32,7 +32,7 @@ $(document).ready(function(){
   });
 
   $("#powerButton").click(function(event){
-    //Sends status of the power to arduino to turn on or off.
+    //TODO send to arduino to turn on or off. default is off
     stat = $("#powerButton").val();
     if(stat == "OFF"){
       stat = "ON";
@@ -61,7 +61,7 @@ $(document).ready(function(){
       }
     });
   });
-  //Sets LED lights to a color that is more yellow than white, an ideal lighting color.  
+
   $("#regLighting").on("click", function(){
     $.ajax({
       type: "POST",
@@ -70,11 +70,11 @@ $(document).ready(function(){
       data: JSON.stringify({status: blueConnect, power:"null",R:"255",G:"255",B:"120"}),
       dataType: "json",
       success: function(){
-        $("#regLighting").css("fill", "rgb(255,241,200)"); //updates css style sheet as well to reflect the changes. 
+        $("#regLighting").css("fill", "rgb(255,241,200)");
       }
     });
   });
-  //Slider information from user is sent to the arduino to change red coloring information.
+
   $("#redSlider").on({
     input: function(event){
       redData = $("#redSlider").val();
@@ -97,7 +97,7 @@ $(document).ready(function(){
         data: JSON.stringify({identifier:"red",status: blueConnect, power:"null", R:redData, G:greenData, B:blueData}),
         dataType: "json",
         success: function(){
-          $("#redData").text("RED: " + redData); //Information of the exact number from 0-255 updates webpage.
+          $("#redData").text("RED: " + redData);
           $("#colorSquare").css("fill","rgb("+redData+","+greenData+","+blueData+")");
         },
         error: function(){

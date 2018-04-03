@@ -5,38 +5,52 @@
 		<link rel="stylesheet" href = "ledStyleSheet.css" type="text/css"></style>
 		<script src = "https://code.jquery.com/jquery-latest.min.js"></script>
 		<script src = "blueToothEventHandling.js"></script>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!--<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+        <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+        -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
-	<body class = "container">
+	<body class = "container-fluid">
 			<div class="row top";>
 				<div class="center-block">
 					<h1 id="top">LED Light Control</h1>
 				</div>
 			</div>
+
 			<div class = "row">
-				<div class = "col-md-6 col-md-offset-3">
+                <div class="col-sm-3"></div>
+				<div class = "col-sm-6">
 					<p style="text-align: center;">Connect to Bluetooth: </p>
 					<input id ="connectButton" class = "buttons" type = "button" value="Not Connected"/>
 				</div>
+                <div class="col-sm-3"></div>
 			</div>
 			<div class = "row">
-				<div class = "col-md-6 col-md-offset-3">
+                <div class="col-sm-3"></div>
+				<div class = "col-sm-6">
 					<p id ="powerStatus" style="text-align: center;">Power:</p>
 					<input id = "powerButton" class="buttons" type ="button" value="OFF"/>
 				</div>
+                <div class="col-sm-3"></div>
 			</div>
+
 			<div class="row">
-				<div class="col-md-6 col-md-offset-3">
+                <div class="col-sm-3"></div>
+				<div class="col-sm-6">
 					<p id="regular" style="text-align: center;">Regular Lighting</p>
 					<input class="buttons" id="regLighting" type="button" value="Regular Lighting"/>
 				</div>
+                <div class="col-sm-3"></div>
 			</div>
+
 			<div id = "Colors" class="row">
-				<div class="col-md-4 col-centered">
+				<div class="col-sm-4">
 					<p id="redData">RED: 0</p>
 					<input
 						class="rangeslider"
@@ -49,7 +63,7 @@
 				    data-orientation="vertical"
 						/>
 				</div>
-				<div class = "col-md-4 col-centered">
+				<div class = "col-sm-4">
 					<p id="greenData">GREEN: 0</p>
 					<input
 						class="rangeslider"
@@ -62,7 +76,7 @@
 				    data-orientation="vertical"
 						/>
 				</div>
-				<div class="col-md-4 col-centered">
+				<div class="col-sm-4 ">
 					<p id="blueData">BLUE: 0</p>
 					<input
 						class="rangeslider"
@@ -76,12 +90,14 @@
 						/>
 				</div>
 			</div>
+
 			<div class="row">
-				<div class="col-md-4 col-md-offset-4 col-centered">
-					<svg width="350" height="250">
-	  				<rect id="colorSquare" width="350" height="250"/>
+                <div class= "col-sm-4"></div>
+				<div class="col-sm-4" style="padding-top:2%;padding-right: 90px">
+					<svg width="250" height="250">
+	  				    <rect id="colorSquare" width="250" height="250" rx="20" ry="20" />
 					</svg>
-				</div>
+                <div class= "col-sm-4"></div>
 			</div>
 	</body>
 </html>
