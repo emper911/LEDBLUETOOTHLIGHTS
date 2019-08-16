@@ -22,6 +22,7 @@ $(document).ready(function(){
         }
         else if(json.status == "Not Connected"){
           $("#connectButton").val("Not Connected");
+          //$("#powerButton").val("OFF");
         }
       },
       error: function(){

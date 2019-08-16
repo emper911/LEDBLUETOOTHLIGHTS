@@ -1,9 +1,10 @@
 //express server
-var express = require('express'), bodyParser = require('body-parser');
+var express = require('./node_modules/express');
+var bodyParser = require('./node_modules/body-parser');
 var app = express();
 app.use(express.static('public'));
 var connected = false;
-var SerialPort = require('serialport');
+var SerialPort = require('./node_modules/serialport');
 var port = new SerialPort('/dev/cu.HC-05-DevB',{baudRate: 9600, autoOpen: false});
 var power;
 var pageStatus;
