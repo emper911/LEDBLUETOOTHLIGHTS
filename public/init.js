@@ -1,12 +1,11 @@
-//initial load of data tracked by server
-var ConnectButton = null;
-var PowerButton =  null;
-var DefaultLightingButton = null;
-var RedSlider = null;
-var GreenSlider = null;
-var BlueSlider = null;
-
 window.addEventListener('load', function(){
+    initTags();
+    initLoadTagData();
+    initButtons();
+    initSliders();
+});
+
+function initTags(){
     ConnectButton = document.getElementById('Connect-Button');
     PowerButton = document.getElementById('Power-Button');
     DefaultLightingButton = document.getElementById('Default-Button');
@@ -14,37 +13,44 @@ window.addEventListener('load', function(){
     RedSlider = document.getElementById('Red-Slider');
     GreenSlider = document.getElementById('Green-Slider');
     BlueSlider = document.getElementById('Blue-Slider');
+    RedData = document.getElementById('Red-Data');
+    GreenData = document.getElementById('Green-Data');
+    BlueData = document.getElementById('Blue-Data');
+    svgSquare = document.getElementById('svg-square');
+}
 
+function initLoadTagData(){
     const url = host+'/initData';
-    let initData = DataFetch(url);
+    let initData = DataFetch(url, null);
     initData.then(resData => {
-        console.log(resData);
+        // console.log(resData);
         ConnectButton.value = resData.connect;
         PowerButton.value = resData.power;
         DefaultLightingButton = resData.default;
         RedSlider.value = resData.red;
         GreenSlider.value = resData.green;
         BlueSlider.value = resData.blue;
+        setSVGColor(resData.red, resData.green, resData.blue);
     });
-    
+}
 
+function initButtons(){
+    //Connects to bluetooth lights
     ConnectButton.addEventListener('click', function(){
         const url = host + '/ConnectButton';
         let data = {status: ConnectButton.value};
         let initData = DataFetch(url, data);
         ConnectButton.value = initData.status;
-    
     });
-    
     //Power Button click event
     PowerButton.addEventListener('click', function(){
         const url = host + '/PowerButton';
         let data = {power: PowerButton.value};
         let initData = DataFetch(url, data);
-        PowerButton.value = initData.power;
-    
+        initData.then(resData => {
+            PowerButton.value = resData.power;
+        });
     });
-    
     //Normal Lighting Button click event
     DefaultLightingButton.addEventListener('click', function(){
         const url = host + '/DefaultLight';
@@ -53,37 +59,46 @@ window.addEventListener('load', function(){
             green: 255,
             blue: 120
         };
-    
         let initData = DataFetch(url, data);
-        DefaultLightingButton.value = initData.default;
-        setSVGColor(data.red, data.green, data.blue);
-    
-    });    
+        initData.then(resData => {
+            DefaultLightingButton.value = resData.default;
+            setSVGColor(data.red, data.green, data.blue);
+        });
+    });  
+}
 
+function initSliders(){
     //connection
     const urlColor = host + '/ColorSlider';
-
     //Red Slider event
-    RedSlider.addEventListener('click', function(){
+    RedSlider.addEventListener('change', function(){
         let data = getSliderData();
-        let initData = DataFetch(urlColor, data);
         setSVGColor(data.red, data.green, data.blue);
+        let initData = DataFetch(urlColor, data);
+        initData.then(resData => {
+            RedData.value = data.red;
+        });
     });
-
     //Green Slider event
-    GreenSlider.addEventListener('click', function(){
+    GreenSlider.addEventListener('change', function(){
         let data = getSliderData();
-        let initData = DataFetch(urlColor, data);
         setSVGColor(data.red, data.green, data.blue);
+        let initData = DataFetch(urlColor, data);
+        initData.then(resData => {
+            GreenData.value = data.green;
+        });
     });
-
     //Blue Slider event
-    BlueSlider.addEventListener('click', function(){
+    BlueSlider.addEventListener('change', function(){
         let data = getSliderData();
-        let initData = DataFetch(urlColor, data);
         setSVGColor(data.red, data.green, data.blue);
+        let initData = DataFetch(urlColor, data);
+        initData.then(resData => {
+            BlueData.value = data.blue;
+        });
     });
-});
+}
+
 
 
 

@@ -98,6 +98,7 @@ app.post('/DefaultLight', function(req, res){
 });
 //TODO check color slider
 app.post('/ColorSlider', function(req, res) {
+    console.log(req.body);
     port.write(req.body.red+req.body.green+req.body.blue+"1*", function(err) {
         port.drain(function(err){
             if (err) {

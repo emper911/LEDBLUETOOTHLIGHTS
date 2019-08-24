@@ -1,8 +1,7 @@
 // let host = '192.168.1.200:3000';
 let host = 'http://localhost:3000';
 
-function DataFetch(url, data=null){
-    ResData = null;
+function DataFetch(url, data){
     const myInit = {
         method: 'POST',
         mode: 'cors',
@@ -31,15 +30,15 @@ function DataFetch(url, data=null){
 }
 
 function getSliderData(){
-    let data = {
-        red: RedSlider.value,
-        green: GreenSlider.value,
-        blue: BlueSlider.value
+    data = {
+        red: parseInt(RedSlider.value),
+        green: parseInt(GreenSlider.value),
+        blue: parseInt(BlueSlider.value)
     };
 
     return data;
 }
 //TODO
 function setSVGColor(red, green, blue){
-
+    svgSquare.setAttribute("fill", `rgb(${red}, ${green}, ${blue})`)
 }
