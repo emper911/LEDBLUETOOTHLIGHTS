@@ -13,9 +13,11 @@ function initTags(){
     RedSlider = document.getElementById('Red-Slider');
     GreenSlider = document.getElementById('Green-Slider');
     BlueSlider = document.getElementById('Blue-Slider');
+
     RedData = document.getElementById('Red-Data');
     GreenData = document.getElementById('Green-Data');
     BlueData = document.getElementById('Blue-Data');
+    
     svgSquare = document.getElementById('svg-square');
 }
 
@@ -76,26 +78,43 @@ function initSliders(){
         setSVGColor(data.red, data.green, data.blue);
         let initData = DataFetch(urlColor, data);
         initData.then(resData => {
-            RedData.value = data.red;
+            RedData.innerText = data.red;
         });
     });
+    RedSlider.addEventListener('input', function() {
+        let data = getSliderData();
+        setSVGColor(data.red, data.green, data.blue);
+        RedData.innerText = data.red;
+    });
+
     //Green Slider event
     GreenSlider.addEventListener('change', function(){
         let data = getSliderData();
         setSVGColor(data.red, data.green, data.blue);
         let initData = DataFetch(urlColor, data);
         initData.then(resData => {
-            GreenData.value = data.green;
+            GreenData.innerText = data.green;
         });
     });
+    GreenSlider.addEventListener('input', function() {
+        let data = getSliderData();
+        setSVGColor(data.red, data.green, data.blue);
+        GreenData.innerText = data.green;
+    });
+
     //Blue Slider event
     BlueSlider.addEventListener('change', function(){
         let data = getSliderData();
         setSVGColor(data.red, data.green, data.blue);
         let initData = DataFetch(urlColor, data);
         initData.then(resData => {
-            BlueData.value = data.blue;
+            BlueData.innerText = data.blue;
         });
+    });
+    BlueSlider.addEventListener('input', function() {
+        let data = getSliderData();
+        setSVGColor(data.red, data.green, data.blue);
+        BlueData.innerText = data.blue;
     });
 }
 

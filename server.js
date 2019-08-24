@@ -6,7 +6,6 @@ app.use(express.static('public'));
 var SerialPort = require('serialport/lib');
 var port = new SerialPort('/dev/cu.HC-05-DevB',{baudRate: 9600, autoOpen: false});
 
-
 let state = {
     connect: "Not Connected",
     power: "OFF",
@@ -15,8 +14,6 @@ let state = {
     green: 0,
     blue: 0,
 }
-// var pageStatus;
-
 
 //port to listen on
 app.listen(3000, function(){
@@ -26,7 +23,6 @@ app.listen(3000, function(){
 app.use(bodyParser.json()); //parses request into json
 //root html file
 //app.route('/')
-
 
 app.post('/initData', function(req, res){
     res.json(state);
@@ -98,7 +94,6 @@ app.post('/DefaultLight', function(req, res){
 });
 //TODO check color slider
 app.post('/ColorSlider', function(req, res) {
-    console.log(req.body);
     port.write(req.body.red+req.body.green+req.body.blue+"1*", function(err) {
         port.drain(function(err){
             if (err) {
@@ -110,6 +105,7 @@ app.post('/ColorSlider', function(req, res) {
         }
         console.log(req.body.red+req.body.green+req.body.blue);
     });
+    res.json({red:req.body.red, green:req.body.green, blue:req.body.blue})
 });
 
 

@@ -2,6 +2,9 @@
 let host = 'http://localhost:3000';
 
 function DataFetch(url, data){
+    if (data != null) {
+        data = new Blob([JSON.stringify(data)], {type : 'application/json'});
+    }
     const myInit = {
         method: 'POST',
         mode: 'cors',
