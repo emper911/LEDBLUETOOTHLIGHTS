@@ -2,7 +2,8 @@
 let host = 'http://localhost:3000';
 
 function DataFetch(url, data){
-    if (data != null) {
+    if (data != null) { //data will be in json format
+        //blob is to send the json to server endpoint
         data = new Blob([JSON.stringify(data)], {type : 'application/json'});
     }
     const myInit = {
@@ -22,14 +23,12 @@ function DataFetch(url, data){
             throw new Error('Something went wrong on api server!');
         }
     })
-    .then(data => {
-        
+    .then(data => {   
         return data;
-    // ...
-    }).catch(error => {
+    })
+    .catch(error => {
         console.error(error);
     });
-
 }
 
 function getSliderData(){
@@ -38,9 +37,9 @@ function getSliderData(){
         green: parseInt(GreenSlider.value),
         blue: parseInt(BlueSlider.value)
     };
-
     return data;
 }
+
 //TODO
 function setSVGColor(red, green, blue){
     svgSquare.setAttribute("fill", `rgb(${red}, ${green}, ${blue})`)

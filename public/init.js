@@ -17,7 +17,7 @@ function initTags(){
     RedData = document.getElementById('Red-Data');
     GreenData = document.getElementById('Green-Data');
     BlueData = document.getElementById('Blue-Data');
-    
+
     svgSquare = document.getElementById('svg-square');
 }
 
@@ -53,6 +53,7 @@ function initButtons(){
             PowerButton.value = resData.power;
         });
     });
+    
     //Normal Lighting Button click event
     DefaultLightingButton.addEventListener('click', function(){
         const url = host + '/DefaultLight';
