@@ -16,6 +16,13 @@ app.listen(3000, function(){
 app.use(bodyParser.json()); //parses request into json
 //root html file
 //app.route('/')
+let state_control = {
+    "connection": false,
+    "power": false,
+    "Lighting": null,
+    "red": null,
+    "green": null
+}
 
 app.post('/index.html',function(req, res){
     //if connection has been established

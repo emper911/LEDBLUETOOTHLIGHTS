@@ -12,13 +12,20 @@
         
         <div class="main">
             <div class="heading">
-                <h1>LED Light Control</h1>
+                <h1>Lights</h1>
+            </div>
+            <div class="component color-visualizer" id="Color-Square">
+                <!-- TODO -->
+                <!-- Change styling so that it is a circle -->
+                <svg width="100%" height="100%">
+                    <rect id="colorSquare" width="100%" height="90%" rx="20" ry="20" />
+                </svg>
             </div>
             <div class="component" id="Controls">
                 
-                <div class="component" id="Button-Controls">
+                <div class="component control" id="Button-Controls">
                     <div class="button-connect">
-                        <p class="button-status">Connect to Bluetooth: </p>
+                        <p class="button-status">Bluetooth: </p>
                         <input class="button" id="Connect-Button"  type="button" value="Not Connected" />
                     </div>
                     <div class="button-power">
@@ -28,16 +35,18 @@
                         <input class="button" id="Power-Button" type="button" value="OFF"/>
                     </div>
 
-                    <div class="button-light-controls">
+                    <div class="button-lights" id="light-controls">
                         <p class="button-status">
-                            Normal Lighting
+                            Lighting: 
                         </p>
                         <input class="button" id="Default-Button" type="button" value="Normal Lighting"/>
                     </div>
+
                 </div>
-                <div class="component color-controls" id="RGB-Sliders">
+                <div class="component control color-controls" id="RGB-Sliders">
                     <div class="slider" id="Red-Slider">
-                        <p class="button-status" id="Red-Data">RED: 0</p>
+                        <p class="button-status">RED:</p>
+                        <p class="button-status" id="Red-Data">0</p>
                         <input
                         class="range-slider"
                         id = "Red-Slider"
@@ -50,7 +59,8 @@
                         />
                     </div>
                     <div class="slider" id="Green-Slider">
-                        <p class="slider-status" id="Green-Data">GREEN: 0</p>
+                        <p class="slider-status">GREEN:</p>
+                        <p class="slider-status" id="Green-Data">0</p>
                         <input
                             class="range-slider"
                             id ="Green-Slider"
@@ -61,9 +71,11 @@
                             value="0"
                             data-orientation="vertical"
                         />
+
                     </div>
                     <div  class="slider" id="Blue-Slider">
-                        <p class="slider-status" id="Blue-Data" >BLUE: 0</p>
+                        <p class="slider-status">BLUE:</p>
+                        <p class="slider-status" id="Blue-Data">0</p>
                         <input
                             class="range-slider"
                             id="Blue-Slider"
@@ -76,11 +88,6 @@
                         />
                     </div>
                 </div>
-            </div>
-            <div class="component color-visualizer" id="Color-Square">
-                <svg width="250" height="250">
-                    <rect id="colorSquare" width="250" height="250" rx="20" ry="20" />
-                </svg>
             </div>
         </div>  
     </body>
