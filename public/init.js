@@ -25,13 +25,16 @@ function initLoadTagData(){
     const url = host+'/initData';
     let initData = DataFetch(url, null);
     initData.then(resData => {
-        // console.log(resData);
+        //console.log(resData);
         ConnectButton.value = resData.connect;
         PowerButton.value = resData.power;
-        DefaultLightingButton = resData.default;
+        DefaultLightingButton.value = resData.default;
         RedSlider.value = resData.red;
+        RedData.innerText = resData.red;
         GreenSlider.value = resData.green;
+        GreenData.innerText = resData.green;
         BlueSlider.value = resData.blue;
+        BlueData.innerText = resData.blue;
         setSVGColor(resData.red, resData.green, resData.blue);
     });
 }
@@ -40,9 +43,13 @@ function initButtons(){
     //Connects to bluetooth lights
     ConnectButton.addEventListener('click', function(){
         const url = host + '/ConnectButton';
-        let data = {status: ConnectButton.value};
+        const data = {status: ConnectButton.value};
         let initData = DataFetch(url, data);
-        ConnectButton.value = initData.status;
+        console.log(initData);
+        initData.then( resData => {
+            console.log(resData);
+            ConnectButton.value = resData.status;
+        });
     });
     //Power Button click event
     PowerButton.addEventListener('click', function(){
@@ -57,14 +64,28 @@ function initButtons(){
     //Normal Lighting Button click event
     DefaultLightingButton.addEventListener('click', function(){
         const url = host + '/DefaultLight';
-        let data = {
-            red: 255,
-            green: 255,
-            blue: 120
-        };
+        if (DefaultLightingButton.value == "OFF"){
+            var data = {
+                red: 255,
+                green: 255,
+                blue: 80
+            };
+        }
+        else if (DefaultLightingButton.value == ""){
+
+        }
+        else{
+            var data = {
+                red: 0,
+                green: 0,
+                blue: 0
+            };
+        }
+
         let initData = DataFetch(url, data);
         initData.then(resData => {
             DefaultLightingButton.value = resData.default;
+            
             setSVGColor(data.red, data.green, data.blue);
         });
     });  
@@ -111,6 +132,7 @@ function initSliders(){
         initData.then(resData => {
             BlueData.innerText = data.blue;
         });
+
     });
     BlueSlider.addEventListener('input', function() {
         let data = getSliderData();
@@ -118,7 +140,6 @@ function initSliders(){
         BlueData.innerText = data.blue;
     });
 }
-
 
 
 

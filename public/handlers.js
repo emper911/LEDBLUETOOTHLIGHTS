@@ -1,14 +1,15 @@
-// let host = '192.168.1.200:3000';
-let host = 'http://localhost:3000';
+let host = 'http://192.168.1.200:3000';
+//let host = 'http://localhost:3000';
 
 function DataFetch(url, data){
     if (data != null) { //data will be in json format
         //blob is to send the json to server endpoint
         data = new Blob([JSON.stringify(data)], {type : 'application/json'});
+        // console.log(data);
     }
     const myInit = {
         method: 'POST',
-        mode: 'cors',
+        // mode: 'no-cors',
         cache: 'default',
         body: data,
     };
