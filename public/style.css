@@ -1,0 +1,153 @@
+/***********************************************************************************************************************************************************
+*******************************************************************Global Styling**************************************************************************
+************************************************************************************************************************************************************/
+html,body
+{
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin:0;
+    /* overflow-x: hidden;  */
+    background-color: rgb(169, 222, 230);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
+}
+body{
+    /* display: grid;
+    grid-template-columns: 25% 50% 25%;
+    grid-template-rows: 25% 50% 25%;
+    grid-template-areas: 
+    ".  .    ."
+    ".  main    ."
+    ".  .   ."; */
+}
+
+.main{
+    /* grid-area: main; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* width: 1080px; */
+    width: 70%;
+    /* height: 730px; */
+    height: 85%;
+
+    background-color: #252525;
+    padding: 40px;
+
+    border: 3px solid #ffffff;
+    box-shadow: 1px 12px 10px 7px rgb(100, 100, 100);
+    border-radius: 1%;
+    color: #ffffff;
+    /* justify-content: center; */
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    grid-template-areas: 
+    "heading  visual"
+    "controls controls";
+}
+
+/* .component{
+    text-align: center;
+} */
+/***********************************************************************************************************************************************************
+*******************************************************************Header Styling**************************************************************************
+************************************************************************************************************************************************************/
+.heading{
+    grid-area: heading;
+    text-align: left;
+    padding-left: 5%;
+}
+
+/***********************************************************************************************************************************************************
+*******************************************************************Control Styling**************************************************************************
+************************************************************************************************************************************************************/
+
+#Controls{
+    grid-area: controls;
+    display: grid;
+    /* flex-direction: row; */
+    grid-template-columns: 50% 50%;
+    /* grid-template-rows: 50% 50%; */
+    grid-template-areas: 
+    "buttons sliders";
+}
+
+.control{
+    padding-left: 5%;
+    padding-right: 2%;
+    padding-top: 7%;
+    /* justify-self: start; */
+    /* align-self: center; */
+}
+
+/* .butt-c{ */
+#Button-Controls{
+    grid-area: buttons;
+    display: flex;
+    flex-direction: column;
+}
+
+/* .butt-c div{ */
+#Button-Controls div{
+    display: flex;
+    flex-direction: row;
+    /* align-content: space-between; */
+    align-items: center;
+    justify-content: space-between;
+    /* align-self: left; */
+}
+
+/* .color-controls{ */
+#RGB-Sliders{
+    grid-area: sliders;
+    justify-content: flex-start;
+}
+
+/* .color-controls div{ */
+#RGB-Sliders div{
+    display: flex;
+    flex-direction: row;
+    /* align-self: left; */
+    justify-content: space-between;
+    align-items: center;
+}
+/***********************************************************************************************************************************************************
+*******************************************************************Color Styling**************************************************************************
+************************************************************************************************************************************************************/
+#Color-Square{
+    grid-area: visual;
+}
+
+
+/***********************************************************************************************************************************************************
+*******************************************************************Element Styling**************************************************************************
+************************************************************************************************************************************************************/
+
+.button {
+    background-color: rgb(185, 185, 185); /* Gray */
+    border: none;
+    color: white;
+    box-shadow: 1px 1px 10px 4px rgb(39, 39, 39);
+    border-radius: 5%;
+    /* padding: 15px 25px; */
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    height: 50px;
+    width: 150px;
+    /* font-size: 2.5vmin; */
+    /* width:40%; */
+    /* margin: auto; */
+}
+
+.range-slider{
+    width: 280px;
+    height: 15px;
+    border-radius: 5px;   
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+}
