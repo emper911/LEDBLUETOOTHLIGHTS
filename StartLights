@@ -1,0 +1,4 @@
+#/usr/bin
+nvm use 8.0.0;
+cd ~/Documents/bluetoothlights;
+npm start

@@ -51,6 +51,12 @@ function initButtons(){
             ConnectButton.value = resData.status;
         });
     });
+
+    ConnectButton.addEventListener('message', (resData) => { 
+        console.log(resData);
+        ConnectButton.value = resData.status;
+    })
+
     //Power Button click event
     PowerButton.addEventListener('click', function(){
         const url = host + '/PowerButton';
@@ -59,6 +65,10 @@ function initButtons(){
         initData.then(resData => {
             PowerButton.value = resData.power;
         });
+    });
+
+    PowerButton.addEventListener("message", (resData) => {
+      PowerButton.value = resData.power;
     });
     
     //Normal Lighting Button click event
@@ -71,9 +81,8 @@ function initButtons(){
                 blue: 80
             };
         }
-        else if (DefaultLightingButton.value == ""){
-
-        }
+        // else if (DefaultLightingButton.value == "ON"){
+        // }
         else{
             var data = {
                 red: 0,
@@ -81,14 +90,35 @@ function initButtons(){
                 blue: 0
             };
         }
-
         let initData = DataFetch(url, data);
         initData.then(resData => {
             DefaultLightingButton.value = resData.default;
-            
+            RedSlider.value = data.red;
+            RedData.innerText = data.red;
+
+            GreenSlider.value = data.green;
+            GreenData.innerText = data.green;
+
+            BlueSlider.value = data.blue;
+            BlueData.innerText = data.blue;
+
             setSVGColor(data.red, data.green, data.blue);
         });
-    });  
+    });
+    
+    DefaultLightingButton.addEventListener("message", (resData) => { 
+        DefaultLightingButton.value = resData.default;
+        RedSlider.value = data.red;
+        RedData.innerText = data.red;
+
+        GreenSlider.value = data.green;
+        GreenData.innerText = data.green;
+
+        BlueSlider.value = data.blue;
+        BlueData.innerText = data.blue;
+
+        setSVGColor(data.red, data.green, data.blue);
+    });
 }
 
 function initSliders(){
@@ -103,10 +133,18 @@ function initSliders(){
             RedData.innerText = data.red;
         });
     });
+
+    
     RedSlider.addEventListener('input', function() {
         let data = getSliderData();
         setSVGColor(data.red, data.green, data.blue);
         RedData.innerText = data.red;
+    });
+    
+    RedSlider.addEventListener("message", (resData) => {
+        setSVGColor(resData.red, resData.green, resData.blue);
+        RedData.innerText = resData.red;
+        RedSlider.value = resData.red;
     });
 
     //Green Slider event
@@ -124,6 +162,12 @@ function initSliders(){
         GreenData.innerText = data.green;
     });
 
+    GreenSlider.addEventListener("message", (resData) => {
+        setSVGColor(resData.red, resData.green, resData.blue);
+        GreenData.innerText = resData.green;
+        GreenSlider.value = resData.green;
+    });
+
     //Blue Slider event
     BlueSlider.addEventListener('change', function(){
         let data = getSliderData();
@@ -139,6 +183,13 @@ function initSliders(){
         setSVGColor(data.red, data.green, data.blue);
         BlueData.innerText = data.blue;
     });
+
+    BlueSlider.addEventListener("message", (resData) => {
+        setSVGColor(resData.red, resData.green, resData.blue);
+        BlueData.innerText = resData.blue;
+        BlueData.value = resData.blue
+    });
+
 }
 
 

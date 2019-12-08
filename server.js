@@ -17,6 +17,36 @@ let state = {
     blue: 0,
 }
 
+// function sseDemo(req, res) {
+//     let messageId = 0;
+
+//     const intervalId = setInterval(() => {
+//         res.write(`id: ${messageId}\n`);
+//         res.write(`data: Test Message -- ${Date.now()}\n\n`);
+//         messageId += 1;
+//     }, 1000);
+
+//     req.on('close', () => {
+//         clearInterval(intervalId);
+//     });
+// }
+
+// app.get('/event-stream', (req, res) => {
+//     // SSE Setup
+//     res.writeHead(200, {
+//         'Content-Type': 'text/event-stream',
+//         'Cache-Control': 'no-cache',
+//         'Connection': 'keep-alive',
+//     });
+//     res.write('\n');
+    
+//     sseDemo(req, res);
+// });
+
+// app.listen(3000);
+
+
+
 //port to listen on
 app.listen(3000, function(){
   console.log('app listening on port 3000!');
@@ -30,6 +60,7 @@ app.route('/');
 app.post('/initData', function(req, res){
     res.json(state);
 });
+
 
 app.post('/ConnectButton', function(req, res){
     console.log(req.body);
@@ -47,6 +78,7 @@ app.post('/ConnectButton', function(req, res){
     }
     //closes connection if front end says not connected
     else if(req.body.status == "Connected"){
+        //port closes if user wishes to disconnect
         port.close(function(err){
             if (err) {
                 return console.log("Error: ", err);
@@ -147,67 +179,3 @@ function formatRGBValue(num) {
   return ("00" + num).slice(-3);
 }
 
-// app.post('/index.html',function(req, res){
-//     //if connection has been established
-//   if(!connected && (req.body.status == "Connected")){
-//     //connects to bluetooth if not connected
-//     port.open(function(err){
-//       if(err){
-//         return console.log("Error: ", err);
-//       }
-//       state_control.connect = "Connected";
-//       console.log("Port is open!");
-//       res.json({"connect":"Connected"});
-//     });
-//   }
-//   //closes connection if front end says not connected
-//   else if(connected && req.body.status == "Not Connected"){
-
-//     port.close(function(err){
-//       if(err){
-//         return console.log("Error: ", err);
-//       }
-//       console.log("Port is closed!");
-//       connected = false;
-//       res.json({"connect":"Not Connected"});
-//     });
-//   }
-//   //if power in json is not null must be ON or OFF
-//   else if(req.body.power != "null"){
-//     if(req.body.power == "ON"){
-//       power = "ON";
-//     }
-//     else{
-//       power = "OFF";
-//     }
-//     port.write(new Buffer(power+"*"), function(err){
-//       port.drain(function(err){
-//         if(err){
-//           return console.log("Error: ", err);
-//         }
-//       });
-//       if(err){
-//         return console.log("Error: ", err);
-//       }
-//       console.log(req.body);
-//       console.log("Power: ", req.body.power);
-//       res.json({power: req.body.power});
-//     });
-//   }
-//   else{
-//     //req.body.R+req.body.G+req.body.B
-
-//     port.write(req.body.R+req.body.G+req.body.B+"1*", function(err){
-//       port.drain(function(err){
-//         if(err){
-//           return console.log("Error: ", err);
-//         }
-//       });
-//       if(err){
-//         return console.log("Error: ", err);
-//       }
-//       console.log(req.body.R+req.body.G+req.body.B);
-//     });
-
-//   }
-// });
