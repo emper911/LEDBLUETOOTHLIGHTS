@@ -1,10 +1,15 @@
 //express server
 var express = require('express');
-var bodyParser = require('body-parser');
+//Express application
 var app = express();
 app.use(express.static('public'));
+//Parsing objects into json
+var bodyParser = require('body-parser');
+app.use(bodyParser.json()); //parses request into json
+//Routing to different endpoints
 var router = express.Router();
 app.use(router);
+//Serial communication with hc 05 bluetooth module
 var SerialPort = require('serialport/lib');
 var port = new SerialPort('/dev/rfcomm0',{baudRate: 9600, autoOpen: false});
 
@@ -38,7 +43,7 @@ let state = {
 //         'Cache-Control': 'no-cache',
 //         'Connection': 'keep-alive',
 //     });
-//     res.write('\n');
+//     res.json(state);
     
 //     sseDemo(req, res);
 // });
@@ -52,11 +57,10 @@ app.listen(3000, function(){
   console.log('app listening on port 3000!');
 });
 
-app.use(bodyParser.json()); //parses request into json
 //root html file
 app.route('/');
 
-
+//loads current state of webserver and lights
 app.post('/initData', function(req, res){
     res.json(state);
 });
@@ -90,7 +94,8 @@ app.post('/ConnectButton', function(req, res){
     }
 });
 
-//TODO check logic
+
+//
 app.post('/PowerButton', function(req, res){
     console.log(req.body);
     if (req.body.power == "OFF") {
@@ -114,6 +119,7 @@ app.post('/PowerButton', function(req, res){
         res.json({power: state.power});
     });
 });
+
 
 //TODO add more interesting logic
 app.post('/DefaultLight', function(req, res){
@@ -155,6 +161,8 @@ app.post('/DefaultLight', function(req, res){
       );
     }
 });
+
+
 //TODO check color slider
 app.post('/ColorSlider', function(req, res) {
     console.log(req.body);
@@ -174,8 +182,55 @@ app.post('/ColorSlider', function(req, res) {
             res.json({red:state.red, green:state.green, blue:state.blue});
         }
     );
-    });
+});
+
+
 function formatRGBValue(num) {
   return ("00" + num).slice(-3);
 }
+
+
+//TURNS OFF LIGHTS AND DISCONNECTS FROM BLUETOOTH ON EXIT
+process.on('SIGINT', function () {
+    if (state.connect == 'Connected'){
+        if (state.power == "ON"){
+            
+            port.write(new Buffer("OFF" + "*"), function (err) {
+                port.drain(function (err) {
+                    if (err) {
+                        return console.log("Error: ", err);
+                    }
+                });
+                if (err) {
+                    return console.log("Error: ", err);
+                }
+            });
+
+            //port closes on disconnect
+            port.close(function (err) {
+                if (err) {
+                    return console.log("Error: ", err);
+                }
+                console.log("\nPort is closed!");
+                state.connect = "Not Connected";
+            });
+        }
+
+        else {
+            //port closes on disconnect
+            port.close(function (err) {
+                if (err) {
+                    return console.log("Error: ", err);
+                }
+                console.log("\nPort is closed!");
+                state.connect = "Not Connected";
+            });
+        }
+    }
+    setInterval(() => {
+        console.log('\nGoodbye!');
+        return process.exit(0);
+    }, 1000);
+    
+});
 
